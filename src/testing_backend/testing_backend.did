@@ -1,3 +1,2 @@
-service : {
-    "greet": (text) -> (text) query;
-}
+type Result = variant { Ok : principal; Err : text };
+service : { get_canister_id : () -> (Result) }

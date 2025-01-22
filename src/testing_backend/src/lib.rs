@@ -2,9 +2,11 @@ mod types;
 use candid::Principal;
 use ic_cdk::{api::{self, call::{call_with_payment128, CallResult}}, update, };
 use types::{CanisterIdRecord, CanisterSettings, CreateCanisterArgument};
+use ic_cdk::export_candid;
 
 #[update]
 async fn get_canister_id() -> Result<Principal, String> {
+    prevent_anonymous()?;
     let controllers: Vec<Principal> = vec![api::caller(), ic_cdk::api::id()];
 
     let controller_settings = CanisterSettings {
@@ -34,3 +36,13 @@ pub async fn create_new_canister(
     )
     .await
 }
+
+pub fn prevent_anonymous() -> Result<(), String> {
+    if api::caller() == Principal::anonymous() {
+        return Err(String::from("unauthorized user"));
+    }
+    Ok(())
+}
+
+
+export_candid!();
