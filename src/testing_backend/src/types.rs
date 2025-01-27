@@ -34,3 +34,13 @@ pub struct CanisterIdRecord {
     /// Principal of the canister.
     pub canister_id: CanisterId,
 }
+
+#[derive(
+    CandidType, Serialize, Deserialize, Debug, PartialEq, Eq, PartialOrd, Ord, Hash, Clone, Default,
+)]
+pub(crate) struct CreateCanisterArgumentExtended {
+    /// See [CanisterSettings].
+    pub settings: Option<CanisterSettings>,
+    /// sender_canister_version must be set to ic_cdk::api::canister_version()
+    pub sender_canister_version: Option<u64>,
+}
