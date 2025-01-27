@@ -1,6 +1,6 @@
 mod types;
 use candid::Principal;
-use ic_cdk::{api::{self, call::{call_with_payment128, CallResult}}, update, };
+use ic_cdk::{api::{self, call::{call_with_payment128, CallResult}},update, };
 use types::{CanisterIdRecord, CanisterSettings, CreateCanisterArgument, CreateCanisterArgumentExtended};
 use ic_cdk::export_candid;
 use crate::api::canister_version;
@@ -10,8 +10,8 @@ use crate::api::canister_version;
 async fn get_canister_id() -> Result<Principal, String> {
     prevent_anonymous()?;
     let controllers: Vec<Principal> = vec![api::caller()];
-
-    let controller_settings = CanisterSettings {
+    
+        let controller_settings = CanisterSettings {
         controllers: Some(controllers),
         ..Default::default()
     };
@@ -19,7 +19,7 @@ async fn get_canister_id() -> Result<Principal, String> {
     let arg = CreateCanisterArgument {
         settings: Some(controller_settings),
     };
-    
+
     match create_new_canister(arg).await {
         Ok((canister_id_record,)) => Ok(canister_id_record.canister_id),
         Err((_, err_string)) => Err(format!("Failed to create canister: {}", err_string)),
@@ -48,6 +48,4 @@ pub fn prevent_anonymous() -> Result<(), String> {
     }
     Ok(())
 }
-
-
 export_candid!();
