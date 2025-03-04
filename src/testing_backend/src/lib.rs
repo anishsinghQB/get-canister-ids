@@ -29,7 +29,7 @@ async fn get_canister_id() -> Result<Principal, String> {
 pub async fn create_new_canister(
     arg: CreateCanisterArgument,
 ) -> CallResult<(CanisterIdRecord,)> {
-    let cycles: u128 = 1_000_000_000_000;
+    let cycles: u128 = 2_000_000_000_000;
     let extended_arg = CreateCanisterArgumentExtended {
         settings: arg.settings,
         sender_canister_version: Some(canister_version()),
